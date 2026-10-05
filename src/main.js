@@ -189,29 +189,18 @@ document.querySelector('#gps').addEventListener('click', async () => {
           }
         }
 
-        const locations = points.map(p => `${p.lat},${p.lon}`).join('|')
-
-        const marineResponse = await fetch(
-          `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=sea_level_height_msl,ocean_current_velocity,ocean_current_direction,wave_height`
+        const depthResults = await Promise.all(
+          points.map(async p => {
+            const response = await fetch(
+              `https://api.odb.ntu.edu.tw/gebco?lon=${p.lon}&lat=${p.lat}&mode=point`
+            )
+            if (!response.ok) throw new Error('GEBCO API gagal')
+            const data = await response.json()
+            return { elevation: data.z?.[0] ?? null }
+          })
         )
 
-        if (!marineResponse.ok) throw new Error('Marine API gagal')
-
-        const marineData = await marineResponse.json()
-        const marine = marineData.current
-
-        document.querySelector('#marine').textContent =
-          `🌊 Muka laut ${marine.sea_level_height_msl.toFixed(2)} m • ` +
-          `🌀 Arus ${marine.ocean_current_velocity.toFixed(1)} km/j • ` +
-          `🧭 ${Math.round(marine.ocean_current_direction)}° • ` +
-          `〰️ Gelombang ${marine.wave_height.toFixed(2)} m`
-
-        const depthResponse = await fetch(
-          `/api/gebco?locations=${locations}`
-        )
-        if (!depthResponse.ok) throw new Error('GEBCO API gagal')
-
-        const depthData = await depthResponse.json()
+        const depthData = { results: depthResults }
 
         const scores = directions.map(([name, deg]) => {
           const samples = points
