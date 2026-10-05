@@ -189,16 +189,19 @@ document.querySelector('#gps').addEventListener('click', async () => {
           }
         }
 
-        const depthResults = await Promise.all(
-          points.map(async p => {
+        const depthResults = []
+        for (const p of points) {
+          try {
             const response = await fetch(
               `https://api.odb.ntu.edu.tw/gebco?lon=${p.lon}&lat=${p.lat}&mode=point`
             )
             if (!response.ok) throw new Error('GEBCO API gagal')
             const data = await response.json()
-            return { elevation: data.z?.[0] ?? null }
-          })
-        )
+            depthResults.push({ elevation: data.z?.[0] ?? null })
+          } catch {
+            depthResults.push({ elevation: null })
+          }
+        }
 
         const depthData = { results: depthResults }
 
