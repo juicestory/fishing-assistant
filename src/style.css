@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #07111f;
+  color: white;
+}
+
+.app {
+  max-width: 480px;
+  margin: auto;
+  padding: 24px 18px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 4px;
+}
+
+.sub {
+  opacity: .7;
+  margin-top: 0;
+}
+
+.compass {
+  width: 230px;
+  height: 230px;
+  margin: 25px auto;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow {
+  font-size: 80px;
+  transition: transform .15s linear;
+}
+
+.degree {
+  position: absolute;
+  bottom: 25px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.card {
+  background: #111f31;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+}
+
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.target {
+  margin-top: 20px;
+}
+
+.target strong {
+  font-size: 32px;
+}
+
+small {
+  display: block;
+  margin-top: 8px;
+  opacity: .7;
+}
+
+#map {
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 18px 0;
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
