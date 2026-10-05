@@ -192,7 +192,7 @@ document.querySelector('#gps').addEventListener('click', async () => {
         const locations = points.map(p => `${p.lat},${p.lon}`).join('|')
 
         const marineResponse = await fetch(
-          `/api/marine?latitude=${lat}&longitude=${lon}&current=sea_level_height_msl,ocean_current_velocity,ocean_current_direction,wave_height`
+          `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=sea_level_height_msl,ocean_current_velocity,ocean_current_direction,wave_height`
         )
 
         if (!marineResponse.ok) throw new Error('Marine API gagal')
