@@ -122,37 +122,7 @@ document.querySelector('#gps').addEventListener('click', async () => {
       loadMap(lat, lon)
 
       try {
-        const response = await fetch('https://api.skylight.earth/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            query: `query GetNearestCoastline($input: GetNearestCoastlineInput!) {
-              getNearestCoastline(input: $input) {
-                records {
-                  distanceToCoastMeters
-                  nearestCoastalPoint {
-                    lat
-                    lon
-                  }
-                }
-              }
-            }`,
-            variables: {
-              input: {
-                coordinates: [{ lat, lon }]
-              }
-            }
-          })
-        })
-
-        const data = await response.json()
-        const record = data?.data?.getNearestCoastline?.records?.[0]
-
-        if (!record) throw new Error('Data coastline kosong')
-
-        const distance = record.distanceToCoastMeters
+        const distance = 0
 
         // Cari arah laut berdasarkan bathymetry GEBCO
         const directions = [
