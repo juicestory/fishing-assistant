@@ -182,7 +182,7 @@ document.querySelector('#gps').addEventListener('click', async () => {
             if (!response.ok) throw new Error('GEBCO API gagal')
             const data = await response.json()
             depthResults.push({ elevation: data.z?.[0] ?? null })
-          } catch {
+          } catch (e) { console.warn("GEBCO:", e)
             depthResults.push({ elevation: null })
           }
         }
