@@ -138,6 +138,17 @@ document.querySelector('#gps').addEventListener('click', async () => {
           `🧭 ${Math.round(marine.ocean_current_direction)}° • ` +
           `〰️ Gelombang ${marine.wave_height.toFixed(2)} m`
 
+        // Data angin
+        const windResponse = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m`
+        )
+        if (!windResponse.ok) throw new Error('Weather API gagal')
+        const windData = await windResponse.json()
+        const wind = windData.current
+
+        document.querySelector('#marine').textContent +=
+          ` • 💨 Angin ${wind.wind_speed_10m.toFixed(1)} km/j ${Math.round(wind.wind_direction_10m)}°`
+
         // Cari arah laut berdasarkan bathymetry GEBCO
         const directions = [
           ['N', 0], ['NE', 45], ['E', 90], ['SE', 135],
