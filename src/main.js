@@ -143,7 +143,7 @@ document.querySelector('#gps').addEventListener('click', async () => {
           ['N', 0], ['NE', 45], ['E', 90], ['SE', 135],
           ['S', 180], ['SW', 225], ['W', 270], ['NW', 315]
         ]
-        const distances = [500, 1000, 1500]
+        const distances = [500, 1000, 1500, 2000, 2500, 3000]
         const R = 6371000
         const points = []
 
