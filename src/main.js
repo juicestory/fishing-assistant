@@ -124,6 +124,20 @@ document.querySelector('#gps').addEventListener('click', async () => {
       try {
         const distance = 0
 
+        // Data kondisi laut
+        const marineResponse = await fetch(
+          `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=sea_level_height_msl,ocean_current_velocity,ocean_current_direction,wave_height`
+        )
+        if (!marineResponse.ok) throw new Error('Marine API gagal')
+        const marineData = await marineResponse.json()
+        const marine = marineData.current
+
+        document.querySelector('#marine').textContent =
+          `🌊 Muka laut ${marine.sea_level_height_msl.toFixed(2)} m • ` +
+          `🌀 Arus ${marine.ocean_current_velocity.toFixed(1)} km/j • ` +
+          `🧭 ${Math.round(marine.ocean_current_direction)}° • ` +
+          `〰️ Gelombang ${marine.wave_height.toFixed(2)} m`
+
         // Cari arah laut berdasarkan bathymetry GEBCO
         const directions = [
           ['N', 0], ['NE', 45], ['E', 90], ['SE', 135],
