@@ -231,9 +231,22 @@ document.querySelector('#gps').addEventListener('click', async () => {
           const depthScore = Math.min(100, (avgDepth / 5) * 100)
           const consistencyScore = consistency * 100
 
+          const angleDiff = (a, b) => {
+            const d = Math.abs(a - b) % 360
+            return d > 180 ? 360 - d : d
+          }
+
+          const currentScore =
+            100 - (angleDiff(deg, marine.ocean_current_direction) / 180) * 100
+
+          const windScore =
+            100 - (angleDiff(deg, wind.wind_direction_10m) / 180) * 100
+
           const score =
-            depthScore * 0.7 +
-            consistencyScore * 0.3
+            depthScore * 0.5 +
+            consistencyScore * 0.2 +
+            currentScore * 0.15 +
+            windScore * 0.15
 
           return {
             name,
